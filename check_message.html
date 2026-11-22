@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block title %}Check Recruiter Message — ScamGuard{% endblock %}
+
+{% block content %}
+<section class="section" style="padding-top: 120px; background-color: var(--bg-light);">
+  <div class="container" style="max-width: 800px;">
+    <div class="section-header">
+      <span class="section-label">Recruiter Chat & Message Scan</span>
+      <h1 class="heading-3">Check a recruiter conversation</h1>
+      <p class="body-3" style="color: var(--text-light-secondary);">
+        Paste a single message or an entire ongoing chat. We check for pressure tactics, fee demands, and risk escalation.
+      </p>
+    </div>
+
+    <div class="form-panel" style="max-width: 100%;">
+      <form action="{{ url_for('check_message') }}" method="POST">
+        <div class="form-group">
+          <label class="form-label" for="message_text">Paste recruiter chat text:</label>
+          <textarea id="message_text" name="message_text" rows="7" class="form-textarea" placeholder="Example: Dear candidate, you are selected for Data Entry intern. Earn 30,000/month. Please pay Rs 999 registration fee via UPI to confirm your appointment letter..." required>{{ input_text or '' }}</textarea>
+          <span class="caption-2" style="color: var(--text-light-muted);">
+            Supports English, Hindi, Hinglish, Malayalam, and Bengali.
+          </span>
+        </div>
+
+        <button type="submit" class="btn btn-primary button-md" style="width: 100%;">
+          Analyze Risk Score &rarr;
+        </button>
+      </form>
+    </div>
+
+    {% if result %}
+    <!-- Result Display Container -->
+    <div class="form-panel" style="max-width: 100%; margin-top: 24px; border-left: 6px solid {% if result.score >= 60 %}var(--color-danger){% elif result.score >= 30 %}var(--color-medium){% else %}var(--color-safe){% endif %};">
+      
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px;">
+        <div>
+          <span class="section-label">Scan Result</span>
+          <h2 class="heading-4" style="margin-top: 4px;">
+            Risk Score: {{ result.score }} / 100
+          </h2>
+          <p class="body-2" style="margin-top: 4px;">
+            Scam Type: <strong>{{ result.scam_type|capitalize }}</strong>
+          </p>
+        </div>
+
+        <div>
+          {% if result.score >= 60 %}
+          <span class="meter-badge badge-danger">High Danger</span>
+          {% elif result.score >= 30 %}
+          <span class="meter-badge badge-medium">Moderate Suspicion</span>
+          {% else %}
+          <span class="meter-badge badge-safe">Low Risk Detected</span>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Progression Escalation Warning (Patent Feature) -->
+      {% if progression and progression.escalating %}
+      <div style="margin-top: 16px; padding: 12px 16px; background-color: var(--color-danger-bg); border-radius: 8px; border: 1px solid var(--color-danger);">
+        <p class="body-2" style="color: var(--color-danger); font-weight: 600;">
+          Warning: Risk Escalation Pattern Detected
+        </p>
+        <p class="caption-1" style="color: var(--color-danger); margin-top: 4px;">
+          The conversation started friendly but shifted into pressure tactics or payment requests in later messages.
+        </p>
+      </div>
+      {% endif %}
+
+      <!-- Flagged Phrases and Reasons -->
+      <div style="margin-top: 24px;">
+        <h4 class="title-3">Why this was flagged:</h4>
+        <ul style="margin-top: 8px; padding-left: 20px; color: var(--text-light-secondary);">
+          {% for r in result.reasons %}
+          <li style="margin-bottom: 8px;">
+            <strong>"{{ r.phrase }}"</strong> — {{ r.explanation }}
+          </li>
+          {% else %}
+          <li>No known high-risk trigger phrases identified.</li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <!-- Actionable Advice -->
+      {% if result.suggestions %}
+      <div style="margin-top: 20px;">
+        <h4 class="title-3">What you should do:</h4>
+        <ul style="margin-top: 8px; padding-left: 20px; color: var(--text-light-secondary);">
+          {% for s in result.suggestions %}
+          <li style="margin-bottom: 6px;">{{ s }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+
+      <!-- Questions to ask the employer -->
+      {% if result.questions %}
+      <div style="margin-top: 20px; padding: 16px; background-color: var(--bg-light); border-radius: 8px;">
+        <h4 class="title-3">Questions to send the recruiter to confirm:</h4>
+        <ul style="margin-top: 8px; padding-left: 20px; color: var(--text-light-primary);">
+          {% for q in result.questions %}
+          <li style="margin-bottom: 8px;">
+            {{ q }}
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+
+      <!-- Inline Rating & Experience Feedback -->
+      <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border-light); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+        <span class="caption-1" style="color: var(--text-light-secondary);">
+          Was this analysis accurate & helpful?
+        </span>
+        <div style="display: flex; gap: 8px;">
+          <a href="{{ url_for('rate_result', action='helpful') }}" class="btn btn-outline-light button-sm" style="color: var(--color-safe);">Helpful</a>
+          <a href="{{ url_for('rate_result', action='unhelpful') }}" class="btn btn-outline-light button-sm" style="color: var(--color-danger);">Not helpful</a>
+        </div>
+      </div>
+
+    </div>
+    {% endif %}
+
+  </div>
+</section>
+{% endblock %}

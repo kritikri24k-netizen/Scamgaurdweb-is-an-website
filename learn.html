@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}Learn Scam Patterns & Safety — ScamGuard{% endblock %}
+
+{% block content %}
+<section class="section" style="padding-top: 120px; background-color: var(--bg-light);">
+  <div class="container" style="max-width: 800px;">
+    <div class="section-header">
+      <span class="section-label">Education & Knowledge Base</span>
+      <h1 class="heading-3">Learn to spot recruitment fraud</h1>
+      <p class="body-3" style="color: var(--text-light-secondary);">
+        Understand the six common tactics fraudsters use on Indian job seekers.
+      </p>
+    </div>
+
+    <!-- Official Helpline Banner -->
+    <div style="background-color: var(--bg-white); border: 2px solid var(--color-accent); border-radius: 12px; padding: 24px; margin-bottom: 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+      <div>
+        <h3 class="heading-5" style="color: var(--color-accent);">Emergency Cybercrime Helpline</h3>
+        <p class="body-3" style="color: var(--text-light-secondary); margin-top: 4px;">
+          If you have transferred funds or shared banking OTPs, report immediately within the golden hour.
+        </p>
+      </div>
+      <div>
+        <span class="btn btn-primary button-lg" style="pointer-events: none;">Call 1930</span>
+      </div>
+    </div>
+
+    <!-- Six Scam Types Accordion -->
+    <div class="faq-list" style="max-width: 100%;">
+      <div class="faq-item open">
+        <button class="faq-question">
+          <span>1. Fake Internship & Registration Fee Scams</span>
+          <span>&darr;</span>
+        </button>
+        <div class="faq-answer">
+          Fraudsters pose as tech startups or MNC HRs offering paid internships. Before issuing the appointment letter, they ask for a "refundable gate pass fee", "laptop insurance", or "document processing charge" of ₹500 to ₹3,000 via UPI. Genuine employers never charge candidates.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>2. Daily Task & Review Rating Traps</span>
+          <span>&darr;</span>
+        </button>
+        <div class="faq-answer">
+          You are asked to like YouTube videos, write Google Maps reviews, or book hotels with promised daily returns of ₹1,500 to ₹5,000. Early payouts of ₹150 are made to build trust, followed by demands for ₹10,000 "crypto or merchant recharge" before releasing earnings.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>3. Off-Platform Telegram / WhatsApp Redirection</span>
+          <span>&darr;</span>
+        </button>
+        <div class="faq-answer">
+          Recruiters message you on LinkedIn or Naukri, then immediately pressure you to move the conversation to personal Telegram or WhatsApp handles to bypass platform anti-abuse screening.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>4. Fake Job Offers with Free Email Domains</span>
+          <span>&darr;</span>
+        </button>
+        <div class="faq-answer">
+          Letters sent from addresses like `tcs-recruitment-team@gmail.com` or `infosys-careers@yahoo.com`. Official corporate recruiters communicate strictly through registered company domain names.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>5. Document & Identity Theft</span>
+          <span>&darr;</span>
+        </button>
+        <div class="faq-answer">
+          Demanding clear front and back photographs of Aadhaar cards, PAN cards, canceled cheques, and bank passbooks before any formal screening or job offer has been issued.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>6. UPI Staged Payment Fraud</span>
+          <span>&darr;</span>
+        </button>
+        <div class="faq-answer">
+          Claiming they are "transferring your signing bonus or stipend" by sending a QR code or collect request. Remember: scanning a QR code or entering your UPI PIN always deducts money; it never receives money.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+{% endblock %}

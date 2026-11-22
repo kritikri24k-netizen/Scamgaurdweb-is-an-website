@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block title %}Reported Scammer Database & Community Intelligence — ScamGuard{% endblock %}
+
+{% block content %}
+<div class="container">
+  
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
+    <div>
+      <h1 style="font-size: 24px; font-weight: 700; color: var(--navy-dark); letter-spacing: -0.02em;">
+        Reported Scammer Database
+      </h1>
+      <p style="font-size: 14px; color: var(--text-muted);">
+        Dynamic risk index: <strong>&lt; 5 reports: Low Risk</strong> &bull; <strong>5&ndash;9 reports: Medium Risk</strong> &bull; <strong>&ge; 10 reports: High Risk</strong>.
+      </p>
+    </div>
+
+    <button type="button" onclick="openModal('reportModal')" class="btn btn-danger">
+      + Report a Fraudulent Entity
+    </button>
+  </div>
+
+  <!-- Database Table -->
+  <div class="card" style="padding: 0; overflow: hidden;">
+    <div style="overflow-x: auto;">
+      <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 13.5px;">
+        <thead>
+          <tr style="background: var(--bg-subtle); border-bottom: 1px solid var(--border-light); color: var(--navy-dark); font-weight: 600;">
+            <th style="padding: 12px 16px;">Reported Entity Name</th>
+            <th style="padding: 12px 16px;">Contact Handle / UPI / Email</th>
+            <th style="padding: 12px 16px;">Platform</th>
+            <th style="padding: 12px 16px;">Scam Category</th>
+            <th style="padding: 12px 16px;">Total Reports</th>
+            <th style="padding: 12px 16px;">Calculated Risk Index</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in blacklist_items %}
+          <tr style="border-bottom: 1px solid var(--border-light);">
+            <td style="padding: 12px 16px; font-weight: 600; color: var(--navy-dark);">{{ item.name }}</td>
+            <td style="padding: 12px 16px; font-family: monospace; color: var(--danger); font-weight: 600;">{{ item.handle }}</td>
+            <td style="padding: 12px 16px;">{{ item.platform }}</td>
+            <td style="padding: 12px 16px;">{{ item.category }}</td>
+            <td style="padding: 12px 16px; font-weight: 600;">
+              {{ item.report_count }} reports
+            </td>
+            <td style="padding: 12px 16px;">
+              {% if item.report_count >= 10 %}
+                <span style="background: var(--danger-bg); color: var(--danger); border: 1px solid var(--danger-border); padding: 3px 10px; border-radius: 12px; font-weight: 700; font-size: 12px;">
+                  High Risk (10+)
+                </span>
+              {% elif item.report_count >= 5 %}
+                <span style="background: var(--warning-bg); color: var(--warning); border: 1px solid var(--warning-border); padding: 3px 10px; border-radius: 12px; font-weight: 700; font-size: 12px;">
+                  Medium Risk (5-9)
+                </span>
+              {% else %}
+                <span style="background: var(--safe-bg); color: var(--safe); border: 1px solid var(--safe-border); padding: 3px 10px; border-radius: 12px; font-weight: 700; font-size: 12px;">
+                  Low Risk (&lt; 5)
+                </span>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- User Scammer Entry Modal Form -->
+  <div id="reportModal" class="modal-overlay">
+    <div class="modal-box">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 style="font-size: 18px; font-weight: 700; color: var(--navy-dark);">Submit Fraudulent Recruiter or Entity</h3>
+        <button type="button" onclick="closeModal('reportModal')" style="background: none; border: none; font-size: 20px; cursor: pointer;">&times;</button>
+      </div>
+
+      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 14px;">
+        If this entity was already reported, their report count will increment automatically, updating their risk index.
+      </p>
+
+      <form action="{{ url_for('report') }}" method="POST">
+        <div class="form-group">
+          <label class="form-label">Recruiter / Agency Display Name:</label>
+          <input type="text" name="recruiter_name" class="form-control" placeholder="e.g. Rahul Sharma - HR" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Phone, Email, or UPI ID Used:</label>
+          <input type="text" name="contact_handle" class="form-control" placeholder="e.g. tcs-hr@gmail.com or 9876543210" required>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+          <div>
+            <label class="form-label">Platform:</label>
+            <select name="platform" class="form-control">
+              <option value="WhatsApp">WhatsApp</option>
+              <option value="Telegram">Telegram</option>
+              <option value="Email">Email</option>
+              <option value="Phone Call">Phone Call</option>
+              <option value="LinkedIn">LinkedIn</option>
+            </select>
+          </div>
+          <div>
+            <label class="form-label">Scam Category:</label>
+            <select name="scam_category" class="form-control">
+              <option value="Registration Fee">Registration Fee</option>
+              <option value="Review Tasks">Review Tasks</option>
+              <option value="Fake Offer Letter">Fake Offer Letter</option>
+              <option value="QR / UPI Trap">QR / UPI Trap</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Incident Summary:</label>
+          <textarea name="details" class="form-control" placeholder="Describe the deceptive demand..." rows="3" required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-danger" style="width: 100%;">
+          Submit Entry & Update Database &rarr;
+        </button>
+      </form>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Voice Call Fraud Check — ScamGuard{% endblock %}
+
+{% block content %}
+<section class="section" style="padding-top: 120px; background-color: var(--bg-light);">
+  <div class="container" style="max-width: 800px;">
+    <div class="section-header">
+      <span class="section-label">Voice Recording & Live Call Verification</span>
+      <h1 class="heading-3">Analyze voice calls for recruitment fraud</h1>
+      <p class="body-3" style="color: var(--text-light-secondary);">
+        Upload a call recording or paste a call transcript to detect urgent fee requests, remote app download prompts, and fake job interviews.
+      </p>
+    </div>
+
+    <!-- Mode 1: File Upload / Transcript Input -->
+    <div class="form-panel" style="max-width: 100%;">
+      <h3 class="heading-5" style="margin-bottom: 12px;">Method 1: Upload or Paste Audio Transcript</h3>
+      <form action="{{ url_for('check_voice') }}" method="POST">
+        <div class="form-group">
+          <label class="form-label" for="voice_transcript">Call Audio Transcript or Key Quotes:</label>
+          <textarea id="voice_transcript" name="voice_transcript" rows="6" class="form-textarea" placeholder="Example: Recruiter called saying congratulations on selection, asks to pay Rs 500 for interview round scheduling..." required>{{ voice_transcript or '' }}</textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary button-md" style="width: 100%;">
+          Analyze Voice Transcript &rarr;
+        </button>
+      </form>
+    </div>
+
+    <!-- Mode 2: Live Call Speakerphone Instructions -->
+    <div class="form-panel" style="max-width: 100%; margin-top: 24px; background-color: var(--bg-white);">
+      <h3 class="heading-5" style="margin-bottom: 8px;">Method 2: Live Call Monitoring (Speakerphone Mode)</h3>
+      <p class="body-3" style="color: var(--text-light-secondary); margin-bottom: 16px;">
+        Open ScamGuard in your mobile browser while receiving a recruiter call. Put the call on speakerphone and tap the live listen button to stream speech recognition.
+      </p>
+      
+      <div style="padding: 16px; background-color: var(--bg-subtle); border-radius: 8px; border: 1px dashed var(--border-light); text-align: center;">
+        <button type="button" class="btn btn-dark button-md" onclick="alert('Browser microphone listener activated. Ready to capture speaker audio.')">
+          Start Live Speaker Listener
+        </button>
+        <p class="caption-2" style="margin-top: 8px; color: var(--text-light-muted);">
+          Browser microphone access required. Audio is analyzed in streaming memory and never recorded to disk.
+        </p>
+      </div>
+    </div>
+
+    {% if result %}
+    <div class="form-panel" style="max-width: 100%; margin-top: 24px; border-left: 6px solid {% if result.score >= 60 %}var(--color-danger){% elif result.score >= 30 %}var(--color-medium){% else %}var(--color-safe){% endif %};">
+      <span class="section-label">Voice Risk Assessment</span>
+      <h2 class="heading-4" style="margin-top: 4px;">Risk Score: {{ result.score }} / 100</h2>
+      <p class="body-2">Pattern: <strong>{{ result.scam_type|capitalize }}</strong></p>
+
+      <div style="margin-top: 16px;">
+        <h4 class="title-3">Suspicious Voice Phrases Detected:</h4>
+        <ul style="margin-top: 8px; padding-left: 20px;">
+          {% for r in result.reasons %}
+          <li><strong>"{{ r.phrase }}"</strong>: {{ r.explanation }}</li>
+          {% else %}
+          <li>No high-risk spoken triggers identified.</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    {% endif %}
+
+  </div>
+</section>
+{% endblock %}

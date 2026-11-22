@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}About ScamGuard — Architecture & Defense Framework{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 900px;">
+  
+  <div style="margin-bottom: 24px;">
+    <h1 style="font-size: 26px; font-weight: 700; color: var(--navy-dark); letter-spacing: -0.02em;">
+      About ScamGuard Architecture
+    </h1>
+    <p style="font-size: 14.5px; color: var(--text-muted);">
+      Detailed architectural breakdown of the multimodal recruitment fraud defense system.
+    </p>
+  </div>
+
+  <!-- Topic 1: Overview & Mission -->
+  <div class="card" style="margin-bottom: 20px;">
+    <h2 style="font-size: 18px; font-weight: 700; color: var(--navy-primary); margin-bottom: 8px;">
+      1. Overview & Research Objectives
+    </h2>
+    <div style="font-size: 14px; line-height: 1.7; color: var(--text-muted);">
+      <p style="margin-bottom: 10px;">
+        <strong>ScamGuard</strong> is an applied computer science research prototype engineered by a 5-member engineering team leading toward a provisional patent filing.
+      </p>
+      <p>
+        The platform addresses the rampant rise of predatory employment fraud targeting Indian college freshers and citizens across digital communication platforms (WhatsApp, Telegram, LinkedIn, SMS).
+      </p>
+    </div>
+  </div>
+
+  <!-- Topic 2: Multimodal Architecture -->
+  <div class="card" style="margin-bottom: 20px;">
+    <h2 style="font-size: 18px; font-weight: 700; color: var(--navy-primary); margin-bottom: 8px;">
+      2. Multimodal Ingestion Pipeline
+    </h2>
+    <div style="font-size: 14px; line-height: 1.7; color: var(--text-muted);">
+      <h3 style="font-size: 15px; font-weight: 600; color: var(--navy-dark); margin-top: 8px;">2.1 Conversational Messaging Analysis</h3>
+      <p style="margin-bottom: 10px;">
+        Evaluates recruiter chat texts in five regional languages (English, Hindi, Hinglish, Bengali, Malayalam) using Gemini AI semantic reasoning to capture evasive phrasing and arbitrary financial demands.
+      </p>
+
+      <h3 style="font-size: 15px; font-weight: 600; color: var(--navy-dark); margin-top: 8px;">2.2 Corporate Domain & SMTP Audit</h3>
+      <p style="margin-bottom: 10px;">
+        Scrutinizes offer letter sender domains, detecting mismatches between advertised company websites and free public webmail addresses (e.g., @gmail.com, @yahoo.com).
+      </p>
+
+      <h3 style="font-size: 15px; font-weight: 600; color: var(--navy-dark); margin-top: 8px;">2.3 Optical Character Recognition (OCR)</h3>
+      <p style="margin-bottom: 10px;">
+        Extracts textual content from scanned PDFs and image-based appointment letters to uncover disguised registration fees, caution deposits, and omitted joining dates.
+      </p>
+
+      <h3 style="font-size: 15px; font-weight: 600; color: var(--navy-dark); margin-top: 8px;">2.4 QR & UPI Forensic Inspector</h3>
+      <p>
+        Analyzes payment request screenshots to alert users when a scammer sends a collect-request disguised as a bonus disbursement.
+      </p>
+    </div>
+  </div>
+
+  <!-- Topic 3: Detection Engine & Safety Bounds -->
+  <div class="card" style="margin-bottom: 20px;">
+    <h2 style="font-size: 18px; font-weight: 700; color: var(--navy-primary); margin-bottom: 8px;">
+      3. Dual-Tier Hybrid Evaluation Engine
+    </h2>
+    <div style="font-size: 14px; line-height: 1.7; color: var(--text-muted);">
+      <h3 style="font-size: 15px; font-weight: 600; color: var(--navy-dark); margin-top: 8px;">3.1 Hard Deterministic Safety Floor</h3>
+      <p style="margin-bottom: 10px;">
+        A strict engineering invariant governs scoring: any rule score reaching 60 or above (indicating upfront fees, deposits, or credential harvesting) can never be lowered by the AI layer.
+      </p>
+
+      <h3 style="font-size: 15px; font-weight: 600; color: var(--navy-dark); margin-top: 8px;">3.2 Prompt Injection Resistance</h3>
+      <p>
+        All user input is treated as untrusted data. Text instructing the scanner to "rate safe" or "ignore red flags" triggers an automatic high-risk violation.
+      </p>
+    </div>
+  </div>
+
+  <!-- Topic 4: Database & Cybercrime Integration -->
+  <div class="card">
+    <h2 style="font-size: 18px; font-weight: 700; color: var(--navy-primary); margin-bottom: 8px;">
+      4. Dynamic Database & National Helpline Coordination
+    </h2>
+    <div style="font-size: 14px; line-height: 1.7; color: var(--text-muted);">
+      <h3 style="font-size: 15px; font-weight: 600; color: var(--navy-dark); margin-top: 8px;">4.1 Dynamic Risk Index Escalation</h3>
+      <p style="margin-bottom: 10px;">
+        Offenders in the community blacklist are dynamically graded: &lt; 5 reports (Low Risk), 5&ndash;9 reports (Medium Risk), and &ge; 10 reports (High Risk).
+      </p>
+
+      <h3 style="font-size: 15px; font-weight: 600; color: var(--navy-dark); margin-top: 8px;">4.2 National Cybercrime Reporting Integration</h3>
+      <p>
+        Victims of active financial deception are routed directly to the Government Cybercrime Helpline (<strong>1930</strong>) and the official reporting portal (<a href="https://cybercrime.gov.in" target="_blank" rel="noopener" style="color: var(--primary); font-weight: 600;">cybercrime.gov.in</a>).
+      </p>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
