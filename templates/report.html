@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Report Fraudulent Recruiter — ScamGuard{% endblock %}
+
+{% block content %}
+<section class="section" style="padding-top: 120px; background-color: var(--bg-light);">
+  <div class="container" style="max-width: 650px;">
+    <div class="section-header">
+      <span class="section-label">Citizen Protection Network</span>
+      <h1 class="heading-3">Report a fraudulent recruiter</h1>
+      <p class="body-3" style="color: var(--text-light-secondary);">
+        Reports are stored to protect other citizens and update the community blacklist. Entries are classified as "Reported" to maintain legal diligence.
+      </p>
+    </div>
+
+    {% if success %}
+    <div style="padding: 16px; background-color: var(--color-safe-bg); border: 1px solid var(--color-safe); border-radius: 8px; margin-bottom: 24px; color: #166534;">
+      Report successfully submitted to the community database. Thank you for protecting fellow job seekers.
+    </div>
+    {% endif %}
+
+    <div class="form-panel" style="max-width: 100%;">
+      <form action="{{ url_for('report') }}" method="POST">
+        <div class="form-group">
+          <label class="form-label" for="recruiter_name">Recruiter / Agency Display Name:</label>
+          <input type="text" id="recruiter_name" name="recruiter_name" class="form-input" placeholder="e.g. Talent Acquisition HR - Rahul" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="platform">Contact Platform:</label>
+          <select id="platform" name="platform" class="form-select">
+            <option value="WhatsApp">WhatsApp</option>
+            <option value="Telegram">Telegram</option>
+            <option value="LinkedIn">LinkedIn</option>
+            <option value="Email">Email</option>
+            <option value="SMS">SMS</option>
+            <option value="Phone Call">Phone Call</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="contact_handle">Phone Number, UPI ID, or Handle:</label>
+          <input type="text" id="contact_handle" name="contact_handle" class="form-input" placeholder="e.g. +91 9876543210 or payments@upi" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="scam_category">Scam Methodology:</label>
+          <select id="scam_category" name="scam_category" class="form-select">
+            <option value="Registration Fee">Registration Fee Demand</option>
+            <option value="Review Tasks">Video Like / Hotel Review Task</option>
+            <option value="Fake Offer Letter">Fake Offer Letter with Fee</option>
+            <option value="Document Theft">Excessive ID / Bank Proof Demands</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="details">Incident Summary:</label>
+          <textarea id="details" name="details" rows="4" class="form-textarea" placeholder="Briefly describe what happened..." required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary button-md" style="width: 100%;">
+          Submit Community Report &rarr;
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

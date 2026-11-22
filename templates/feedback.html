@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}User Ratings & Feedback — ScamGuard{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 860px;">
+  
+  <div style="margin-bottom: 24px;">
+    <h1 style="font-size: 24px; font-weight: 700; color: var(--navy-dark);">Community Ratings & Real User Feedbacks</h1>
+    <p style="font-size: 14px; color: var(--text-muted);">
+      Direct feedback submitted by users based on real scan experiences. No fabricated reviews.
+    </p>
+  </div>
+
+  <!-- Real User Rating Submission Card -->
+  <div class="card" style="margin-bottom: 32px;">
+    <h3 style="font-size: 16px; font-weight: 700; color: var(--navy-dark); margin-bottom: 14px;">
+      Share Your Rating & App Experience
+    </h3>
+    <form action="{{ url_for('feedback') }}" method="POST">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 14px;">
+        <div>
+          <label class="form-label">Your Name or Identity:</label>
+          <input type="text" name="user_name" class="form-control" placeholder="e.g. Student / Jobseeker" required value="{{ session.get('user', {}).get('name', '') }}">
+        </div>
+        <div>
+          <label class="form-label">Accuracy Star Rating:</label>
+          <select name="rating_score" class="form-control" required>
+            <option value="5">&#9733;&#9733;&#9733;&#9733;&#9733; (Very Satisfied)</option>
+            <option value="4">&#9733;&#9733;&#9733;&#9733; (Satisfied)</option>
+            <option value="3">&#9733;&#9733;&#9733; (Neutral)</option>
+            <option value="2">&#9733;&#9733; (Not Helpful)</option>
+            <option value="1">&#9733; (Very Bad)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Feedback or Suggestions:</label>
+        <textarea name="suggestion_text" class="form-control" rows="3" placeholder="Share your experience or new scam tactics you encountered..." required></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-navy btn-sm">Submit Review &rarr;</button>
+    </form>
+  </div>
+
+  <!-- Real User Feedbacks Feed -->
+  <div>
+    <h3 style="font-size: 18px; font-weight: 700; color: var(--navy-dark); margin-bottom: 16px;">
+      Verified Feedback Submissions
+    </h3>
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      {% for fb in feedback_list %}
+      <div class="card" style="padding: 16px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+          <strong style="font-size: 14px; color: var(--navy-dark);">{{ fb.name }}</strong>
+          <span style="color: #F59E0B; font-weight: 700;">{{ '★' * (fb.rating|int) }}</span>
+        </div>
+        <p style="font-size: 13.5px; color: var(--text-muted);">"{{ fb.comment }}"</p>
+        <div style="font-size: 11.5px; color: var(--text-light); margin-top: 6px;">{{ fb.get('date', 'Recent Submission') }}</div>
+      </div>
+      {% else %}
+      <div class="card" style="padding: 24px; text-align: center; color: var(--text-muted);">
+        No user feedback submitted yet. Test the app and be the first to leave an honest review.
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+</div>
+{% endblock %}

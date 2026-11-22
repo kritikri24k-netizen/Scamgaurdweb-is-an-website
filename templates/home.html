@@ -1,0 +1,313 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+  
+  <!-- Section 1: Welcome & Get Started Hero with Safety Quote -->
+  <div class="hero-welcome-card">
+    <div style="font-size: 13.5px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 800; color: #93C5FD;">
+      {{ t('hero_badge') }}
+    </div>
+    <h1 style="font-size: 32px; font-weight: 800; letter-spacing: -0.02em; margin-top: 4px;">
+      {{ t('hero_heading') }}
+    </h1>
+
+    <!-- Meaningful Quote for Safety and Security -->
+    <div class="hero-quote-box">
+      "{{ t('hero_quote') }}"
+    </div>
+
+    <!-- Modality Checkboxes / Choice Selector -->
+    <div style="font-size: 14.5px; font-weight: 700; color: #E2E8F0; margin-bottom: 8px;">
+      {{ t('select_format') }}
+    </div>
+    <div class="modality-selector-grid">
+      <div class="modality-choice active" data-target="workspace-chat">
+        <input type="radio" name="modality_select" checked>
+        <div>
+          <div style="font-weight: 700; font-size: 14.5px;">{{ t('tab_chat') }}</div>
+          <div style="font-size: 12px; opacity: 0.85;">{{ t('desc_chat') }}</div>
+        </div>
+      </div>
+
+      <div class="modality-choice" data-target="workspace-email">
+        <input type="radio" name="modality_select">
+        <div>
+          <div style="font-weight: 700; font-size: 14.5px;">{{ t('tab_email') }}</div>
+          <div style="font-size: 12px; opacity: 0.85;">{{ t('desc_email') }}</div>
+        </div>
+      </div>
+
+      <div class="modality-choice" data-target="workspace-doc">
+        <input type="radio" name="modality_select">
+        <div>
+          <div style="font-weight: 700; font-size: 14.5px;">{{ t('tab_doc') }}</div>
+          <div style="font-size: 12px; opacity: 0.85;">{{ t('desc_doc') }}</div>
+        </div>
+      </div>
+
+      <div class="modality-choice" data-target="workspace-qr">
+        <input type="radio" name="modality_select">
+        <div>
+          <div style="font-weight: 700; font-size: 14.5px;">{{ t('tab_qr') }}</div>
+          <div style="font-size: 12px; opacity: 0.85;">{{ t('desc_qr') }}</div>
+        </div>
+      </div>
+
+      <div class="modality-choice" data-target="workspace-voice">
+        <input type="radio" name="modality_select">
+        <div>
+          <div style="font-weight: 700; font-size: 14.5px;">{{ t('tab_voice') }}</div>
+          <div style="font-size: 12px; opacity: 0.85;">{{ t('desc_voice') }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2: DYNAMIC WORKSPACES (Only the selected checkbox interface renders) -->
+
+  <!-- WORKSPACE 1: Chat / SMS -->
+  <div id="workspace-chat" class="scanner-workspace active">
+    <div style="margin-bottom: 18px;">
+      <h2 style="font-size: 20px; font-weight: 700; color: var(--navy-dark);">
+        {{ t('chat_h2') }}
+      </h2>
+      <p style="font-size: 14.5px; color: var(--text-muted);">
+        {{ t('chat_p') }}
+      </p>
+    </div>
+
+    <form action="{{ url_for('scan') }}" method="POST">
+      <input type="hidden" name="scan_type" value="chat">
+      <div class="form-group">
+        <label class="form-label">{{ t('chat_label') }}</label>
+        <textarea name="content" class="form-control" placeholder="{{ t('chat_ph') }}" required>{{ input_text if current_tab == 'chat' else '' }}</textarea>
+      </div>
+      <button type="submit" class="btn btn-navy">{{ t('btn_analyze') }} &rarr;</button>
+    </form>
+  </div>
+
+  <!-- WORKSPACE 2: Email & Offer Letter -->
+  <div id="workspace-email" class="scanner-workspace">
+    <div style="margin-bottom: 18px;">
+      <h2 style="font-size: 20px; font-weight: 700; color: var(--navy-dark);">
+        Corporate Domain & Offer Letter Verification
+      </h2>
+      <p style="font-size: 14.5px; color: var(--text-muted);">
+        Checks sender webmail headers against authentic corporate domains and identifies hidden deposit clauses.
+      </p>
+    </div>
+
+    <form action="{{ url_for('scan') }}" method="POST">
+      <input type="hidden" name="scan_type" value="email">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 14px;">
+        <div>
+          <label class="form-label">Recruiter Sender Email Address:</label>
+          <input type="email" name="sender_email" class="form-control" placeholder="e.g. hr-tcs-careers@gmail.com">
+        </div>
+        <div>
+          <label class="form-label">Official Company Website:</label>
+          <input type="text" name="company_website" class="form-control" placeholder="e.g. tcs.com">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Paste Offer Letter Text / Appointment Terms:</label>
+        <textarea name="content" class="form-control" placeholder="Paste the appointment terms or stipend details..."></textarea>
+      </div>
+      <button type="submit" class="btn btn-navy">{{ t('btn_analyze') }} &rarr;</button>
+    </form>
+  </div>
+
+  <!-- WORKSPACE 3: Document OCR -->
+  <div id="workspace-doc" class="scanner-workspace">
+    <div style="margin-bottom: 18px;">
+      <h2 style="font-size: 20px; font-weight: 700; color: var(--navy-dark);">
+        Document OCR Text Extraction & Audit
+      </h2>
+      <p style="font-size: 14.5px; color: var(--text-muted);">
+        Upload scanned appointment PDFs or images to extract text and inspect for fraudulent terms.
+      </p>
+    </div>
+
+    <form action="{{ url_for('scan') }}" method="POST" enctype="multipart/form-data">
+      <input type="hidden" name="scan_type" value="document">
+      <div class="upload-dropzone" onclick="document.getElementById('docFile').click()">
+        <input type="file" id="docFile" name="doc_file" style="display: none;" onchange="document.getElementById('docName').innerText = this.files[0].name">
+        <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 36px; height: 36px; margin: 0 auto 8px; color: var(--navy-primary);">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
+        </svg>
+        <div style="font-weight: 700; font-size: 15px;">Click to Upload Offer Document (PDF, PNG, JPG)</div>
+        <div style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">OCR will extract text and scan for deposit requirements</div>
+        <div id="docName" style="margin-top: 8px; font-weight: 700; color: var(--avengers-blue);"></div>
+      </div>
+      <div style="margin-top: 16px;">
+        <button type="submit" class="btn btn-navy">Process Document with OCR &rarr;</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- WORKSPACE 4: QR / UPI Scanner -->
+  <div id="workspace-qr" class="scanner-workspace">
+    <div style="margin-bottom: 18px;">
+      <h2 style="font-size: 20px; font-weight: 700; color: var(--navy-dark);">
+        QR Code & UPI Collect Request Inspector
+      </h2>
+      <p style="font-size: 14.5px; color: var(--text-muted);">
+        Upload payment QR screenshots or UPI links to detect "scan to receive payment" collection traps.
+      </p>
+    </div>
+
+    <form action="{{ url_for('scan') }}" method="POST" enctype="multipart/form-data">
+      <input type="hidden" name="scan_type" value="qr">
+      <div class="upload-dropzone" onclick="document.getElementById('qrFile').click()">
+        <input type="file" id="qrFile" name="qr_file" accept="image/*" style="display: none;" onchange="document.getElementById('qrName').innerText = this.files[0].name">
+        <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 36px; height: 36px; margin: 0 auto 8px; color: var(--navy-primary);">
+          <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+          <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+        </svg>
+        <div style="font-weight: 700; font-size: 15px;">Upload Screenshot of QR Code or Payment Prompt</div>
+        <div style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">Decodes parameters and flags unauthorized collect requests</div>
+        <div id="qrName" style="margin-top: 8px; font-weight: 700; color: var(--avengers-blue);"></div>
+      </div>
+      <div style="margin-top: 16px;">
+        <button type="submit" class="btn btn-navy">Decode QR & Inspect UPI Parameters &rarr;</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- WORKSPACE 5: Voice Recording -->
+  <div id="workspace-voice" class="scanner-workspace">
+    <div style="margin-bottom: 18px;">
+      <h2 style="font-size: 20px; font-weight: 700; color: var(--navy-dark);">
+        Voice Call Audio Analysis
+      </h2>
+      <p style="font-size: 14.5px; color: var(--text-muted);">
+        Upload voice call recordings to convert spoken audio into text and evaluate for urgency cues.
+      </p>
+    </div>
+
+    <form action="{{ url_for('scan') }}" method="POST" enctype="multipart/form-data">
+      <input type="hidden" name="scan_type" value="voice">
+      <div class="upload-dropzone" onclick="document.getElementById('audioFile').click()">
+        <input type="file" id="audioFile" name="audio_file" accept="audio/*" style="display: none;" onchange="document.getElementById('audioName').innerText = this.files[0].name">
+        <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 36px; height: 36px; margin: 0 auto 8px; color: var(--navy-primary);">
+          <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+          <path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/>
+        </svg>
+        <div style="font-weight: 700; font-size: 15px;">Upload Call Audio Recording (MP3, WAV, M4A)</div>
+        <div style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">Transcribes speech and identifies spoken fraud pressure points</div>
+        <div id="audioName" style="margin-top: 8px; font-weight: 700; color: var(--avengers-blue);"></div>
+      </div>
+      <div style="margin-top: 16px;">
+        <button type="submit" class="btn btn-navy">Transcribe & Analyze Voice &rarr;</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Section 3: REAL SCAN RESULT DISPLAY -->
+  {% if result %}
+  <div class="result-card {% if result.score >= 60 %}danger{% elif result.score >= 30 %}warning{% else %}safe{% endif %}">
+    
+    <div class="score-display">
+      <div>
+        <span style="font-size: 13px; font-weight: 700; text-transform: uppercase; color: var(--text-muted);">
+          {{ t('eval_assessment') }}
+        </span>
+        <div class="score-pill {% if result.score >= 60 %}danger{% elif result.score >= 30 %}warning{% else %}safe{% endif %}">
+          Risk Score: {{ result.score }} / 100
+        </div>
+        <div style="font-size: 15px; font-weight: 700; margin-top: 2px;">
+          Identified Pattern: <span style="text-transform: capitalize;">{{ result.scam_type }}</span>
+        </div>
+      </div>
+
+      <div>
+        {% if result.score >= 60 %}
+          <span style="background: var(--danger-bg); color: var(--danger); font-weight: 700; padding: 6px 14px; border-radius: 20px; font-size: 13px; border: 1px solid var(--danger-border);">
+            {{ t('high_risk_badge') }}
+          </span>
+        {% elif result.score >= 30 %}
+          <span style="background: var(--warning-bg); color: var(--warning); font-weight: 700; padding: 6px 14px; border-radius: 20px; font-size: 13px; border: 1px solid var(--warning-border);">
+            {{ t('medium_risk_badge') }}
+          </span>
+        {% else %}
+          <span style="background: var(--safe-bg); color: var(--safe); font-weight: 700; padding: 6px 14px; border-radius: 20px; font-size: 13px; border: 1px solid var(--safe-border);">
+            {{ t('low_risk_badge') }}
+          </span>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Flagged Trigger Phrases -->
+    <div style="margin-top: 18px;">
+      <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 8px; color: var(--navy-dark);">
+        {{ t('signatures_found') }}
+      </h3>
+      <ul style="padding-left: 20px; font-size: 14.5px; color: var(--text-muted);">
+        {% for r in result.reasons %}
+          <li style="margin-bottom: 6px;">
+            <strong style="color: var(--text-main);">"{{ r.phrase }}"</strong> &mdash; {{ r.explanation }}
+          </li>
+        {% else %}
+          <li>No deterministic high-risk phrases discovered in the input.</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <!-- Ready Questions to send back -->
+    {% if result.questions %}
+    <div style="margin-top: 18px; padding: 16px; background: #F8FAFC; border-radius: var(--radius-sm); border: 1px solid var(--border-light);">
+      <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 6px; color: var(--navy-dark);">
+        {{ t('counter_q') }}
+      </h4>
+      <ul style="padding-left: 20px; font-size: 14px; color: var(--text-main);">
+        {% for q in result.questions %}
+          <li style="margin-bottom: 4px;">{{ q }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    <!-- Collapsible Rating Box -->
+    <div class="rating-drawer">
+      <div id="ratingDrawerHeader" class="rating-drawer-header">
+        <span>{{ t('share_rating') }}</span>
+        <span id="ratingChevron" style="font-size: 12px; color: var(--text-muted);">▼</span>
+      </div>
+
+      <div id="ratingDrawerBody" class="rating-drawer-body">
+        <form action="{{ url_for('submit_rating') }}" method="POST">
+          <input type="hidden" name="scan_id" value="{{ result.get('id', 'recent') }}">
+          
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+            <div>
+              <label class="form-label">{{ t('your_name') }}</label>
+              <input type="text" name="user_name" class="form-control" placeholder="e.g. Candidate" value="{{ session.get('user', {}).get('name', '') }}" required>
+            </div>
+            <div>
+              <label class="form-label">{{ t('acc_rating') }}</label>
+              <select name="stars" class="form-control" required>
+                <option value="5">{{ t('opt_5') }}</option>
+                <option value="4">{{ t('opt_4') }}</option>
+                <option value="3">{{ t('opt_3') }}</option>
+                <option value="2">{{ t('opt_2') }}</option>
+                <option value="1">{{ t('opt_1') }}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">{{ t('suggestions') }}</label>
+            <textarea name="comment" class="form-control" rows="2" placeholder="Tell us if the risk score was accurate or how to improve..." style="min-height: 70px;"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-navy btn-sm">{{ t('btn_submit_review') }}</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+  {% endif %}
+
+</div>
+{% endblock %}

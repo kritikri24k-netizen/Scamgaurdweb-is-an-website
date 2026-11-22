@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Create Account — ScamGuard{% endblock %}
+
+{% block content %}
+<section class="section" style="padding-top: 120px; background-color: var(--bg-light);">
+  <div class="container" style="max-width: 520px;">
+    <div class="section-header">
+      <span class="section-label">Citizen Registration</span>
+      <h1 class="heading-4">Create your ScamGuard account</h1>
+      <p class="body-3" style="color: var(--text-light-secondary);">
+        Save your scan history, view risk patterns, and contribute to community scam reporting.
+      </p>
+    </div>
+
+    <div class="form-panel" style="max-width: 100%;">
+      <form action="{{ url_for('signup') }}" method="POST">
+        <div class="form-group">
+          <label class="form-label" for="full_name">Full Name:</label>
+          <input type="text" id="full_name" name="full_name" class="form-input" placeholder="Your name" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="email">Email Address:</label>
+          <input type="email" id="email" name="email" class="form-input" placeholder="name@domain.com" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="phone">Mobile Number (Optional for phone login):</label>
+          <input type="tel" id="phone" name="phone" class="form-input" placeholder="+91 98765 43210">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password">Create Password:</label>
+          <input type="password" id="password" name="password" class="form-input" placeholder="At least 6 characters" required>
+        </div>
+
+        <!-- "I am not a robot" Verification Checkbox strictly per user request -->
+        <div class="bot-checkbox-group">
+          <input type="checkbox" id="not_a_robot" name="not_a_robot" required style="width: 18px; height: 18px; cursor: pointer;">
+          <label for="not_a_robot" class="body-2" style="cursor: pointer; user-select: none;">
+            I am not a robot
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary button-md" style="width: 100%;">
+          Complete Sign Up &rarr;
+        </button>
+      </form>
+
+      <div style="margin-top: 20px; text-align: center; border-top: 1px solid var(--border-light); padding-top: 16px;">
+        <span class="caption-2" style="color: var(--text-light-muted);">Or sign in quickly with</span>
+        <div style="margin-top: 8px;">
+          <a href="#" class="btn btn-outline-light button-sm" onclick="alert('Google OAuth connection interface'); return false;">
+            Continue with Google
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

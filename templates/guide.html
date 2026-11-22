@@ -1,0 +1,219 @@
+{% extends "base.html" %}
+
+{% block title %}System Guide & Interactive Trial Simulator — SafeGuard{% endblock %}
+
+{% block content %}
+<div class="container">
+  
+  <div style="margin-bottom: 24px;">
+    <h1 style="font-size: 26px; font-weight: 800; color: var(--navy-dark); letter-spacing: -0.02em;">
+      SafeGuard Comprehensive System Guide
+    </h1>
+    <p style="font-size: 15px; color: var(--text-muted);">
+      Complete walkthrough of every feature in SafeGuard, followed by an interactive multi-scenario simulator trial.
+    </p>
+  </div>
+
+  <!-- Comprehensive Walkthrough of Every Feature -->
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; margin-bottom: 32px;">
+    
+    <!-- Feature 1: Chat / SMS -->
+    <div class="card" style="border-top: 4px solid var(--primary);">
+      <h3 style="font-size: 16.5px; font-weight: 800; color: var(--navy-dark); margin-bottom: 6px;">
+        1. Recruiter Messaging & Chat Inspection
+      </h3>
+      <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6;">
+        Paste transcripts from WhatsApp, Telegram, LinkedIn, or SMS. The engine checks across 5 regional languages (English, Hindi, Hinglish, Bengali, Malayalam) for artificial urgency, task bait, and progressive pressure tactics.
+      </p>
+    </div>
+
+    <!-- Feature 2: Email & Offer Letter -->
+    <div class="card" style="border-top: 4px solid var(--navy-primary);">
+      <h3 style="font-size: 16.5px; font-weight: 800; color: var(--navy-dark); margin-bottom: 6px;">
+        2. Corporate Domain vs Free Webmail Audit
+      </h3>
+      <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6;">
+        Audits recruiter sender emails against official company websites. Automatically flags legitimate brand names using free public webmails like @gmail.com or @yahoo.com with missing joining dates or ambiguous stipends.
+      </p>
+    </div>
+
+    <!-- Feature 3: Document OCR Extraction -->
+    <div class="card" style="border-top: 4px solid #00D2FF;">
+      <h3 style="font-size: 16.5px; font-weight: 800; color: var(--navy-dark); margin-bottom: 6px;">
+        3. Optical Character Recognition (OCR) Upload
+      </h3>
+      <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6;">
+        Upload scanned PDFs or image-based appointment letters (PNG, JPG). Extracts text directly from documents to reveal disguised security deposits, laptop caution fees, and equipment charges.
+      </p>
+    </div>
+
+    <!-- Feature 4: QR & UPI Collector Scanner -->
+    <div class="card" style="border-top: 4px solid var(--warning);">
+      <h3 style="font-size: 16.5px; font-weight: 800; color: var(--navy-dark); margin-bottom: 6px;">
+        4. QR Code & UPI Collection Traps
+      </h3>
+      <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6;">
+        Upload screenshots of payment QR codes or UPI prompts. Alerts users that scanning a QR code or entering a UPI PIN strictly deducts funds and never receives bonuses or payments.
+      </p>
+    </div>
+
+    <!-- Feature 5: Voice Call Audio Analysis -->
+    <div class="card" style="border-top: 4px solid #8B5CF6;">
+      <h3 style="font-size: 16.5px; font-weight: 800; color: var(--navy-dark); margin-bottom: 6px;">
+        5. Voice Recording Transcription & Analysis
+      </h3>
+      <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6;">
+        Upload phone recordings or voice notes. Transcribes spoken dialogue and detects urgency markers, phone interview fee requests, and identity disclosure pressure.
+      </p>
+    </div>
+
+    <!-- Feature 6: Dynamic Scammer Database -->
+    <div class="card" style="border-top: 4px solid var(--danger);">
+      <h3 style="font-size: 16.5px; font-weight: 800; color: var(--navy-dark); margin-bottom: 6px;">
+        6. Scammer Database & Fuzzy Matching
+      </h3>
+      <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6;">
+        Community-reported registry with 3-tier risk index (&lt;5 Low, 5&ndash;9 Medium, &ge;10 High Risk). Normalized Levenshtein similarity flags offenders even if they slightly alter their name or handle representation.
+      </p>
+    </div>
+
+    <!-- Feature 7: Scan History & Ratings -->
+    <div class="card" style="border-top: 4px solid var(--safe);">
+      <h3 style="font-size: 16.5px; font-weight: 800; color: var(--navy-dark); margin-bottom: 6px;">
+        7. History Storage & Inline Accuracy Ratings
+      </h3>
+      <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6;">
+        Signed-in accounts preserve scan logs, risk summaries, and timestamps. Submit 1-to-5 star ratings directly beside scan results to help train and verify model precision.
+      </p>
+    </div>
+
+    <!-- Feature 8: Government Cybercrime Integration -->
+    <div class="card" style="border-top: 4px solid #BE123C;">
+      <h3 style="font-size: 16.5px; font-weight: 800; color: var(--navy-dark); margin-bottom: 6px;">
+        8. National Helpline (1930) Direct Routing
+      </h3>
+      <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6;">
+        Direct routing to the 24x7 Citizen Cyber Financial Fraud Helpline (1930) and the national reporting portal (cybercrime.gov.in) to dispute unauthorized transactions in the golden hour.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- Interactive Practice Trial Simulator -->
+  <div class="card" style="border: 2px solid var(--primary); padding: 28px; margin-top: 10px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 12px;">
+      <div>
+        <h2 style="font-size: 21px; font-weight: 800; color: var(--navy-dark);">
+          Interactive Practice Trial Simulator
+        </h2>
+        <p style="font-size: 14px; color: var(--text-muted);">
+          Practice with sample scenarios before inspecting live recruiter communications:
+        </p>
+      </div>
+      <span style="background: var(--primary-subtle); color: var(--primary); padding: 6px 14px; border-radius: 20px; font-weight: 800; font-size: 12.5px;">
+        Interactive Trial Mode
+      </span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 18px;">
+      
+      <!-- Trial Scenario A -->
+      <div style="border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 18px; background: var(--bg-subtle);">
+        <div style="font-weight: 800; font-size: 14.5px; color: var(--navy-dark); margin-bottom: 6px;">
+          Scenario A: Fake Internship Gate Fee
+        </div>
+        <p style="font-size: 13.5px; color: var(--text-muted); font-style: italic; margin-bottom: 12px;">
+          "Dear candidate, you are selected for Data Analyst intern at ₹40,000/mo. Please transfer ₹1,500 security deposit to complete HR onboarding."
+        </p>
+        <button type="button" class="btn btn-navy btn-sm" onclick="runTrial('A')">
+          Simulate Scan on Scenario A &rarr;
+        </button>
+      </div>
+
+      <!-- Trial Scenario B -->
+      <div style="border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 18px; background: var(--bg-subtle);">
+        <div style="font-weight: 800; font-size: 14.5px; color: var(--navy-dark); margin-bottom: 6px;">
+          Scenario B: Video Like Commission Trap
+        </div>
+        <p style="font-size: 13.5px; color: var(--text-muted); font-style: italic; margin-bottom: 12px;">
+          "Earn ₹3,000 daily by liking YouTube videos. Contact coordinator on Telegram @quick_tasks to claim your first ₹150 trial payout."
+        </p>
+        <button type="button" class="btn btn-navy btn-sm" onclick="runTrial('B')">
+          Simulate Scan on Scenario B &rarr;
+        </button>
+      </div>
+
+      <!-- Trial Scenario C -->
+      <div style="border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 18px; background: var(--bg-subtle);">
+        <div style="font-weight: 800; font-size: 14.5px; color: var(--navy-dark); margin-bottom: 6px;">
+          Scenario C: Official Placement Notice
+        </div>
+        <p style="font-size: 13.5px; color: var(--text-muted); font-style: italic; margin-bottom: 12px;">
+          "Greetings, this is University Placement Cell. Register on the official student portal and upload your resume before Friday 5 PM."
+        </p>
+        <button type="button" class="btn btn-navy btn-sm" onclick="runTrial('C')">
+          Simulate Scan on Scenario C &rarr;
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Trial Interactive Output Box -->
+    <div id="trialOutput" style="display: none; margin-top: 24px; padding: 20px; border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+        <span style="font-size: 12px; font-weight: 800; text-transform: uppercase; color: var(--text-muted);">Trial Simulation Result</span>
+        <span id="trialBadge" style="font-weight: 800; padding: 4px 12px; border-radius: 12px; font-size: 12px;"></span>
+      </div>
+      <div id="trialScore" style="font-size: 22px; font-weight: 800; margin-bottom: 6px;"></div>
+      <div id="trialType" style="font-size: 14.5px; font-weight: 700; margin-bottom: 10px;"></div>
+      <div id="trialDetails" style="font-size: 14px; color: var(--text-muted);"></div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+function runTrial(type) {
+  const box = document.getElementById('trialOutput');
+  const badge = document.getElementById('trialBadge');
+  const score = document.getElementById('trialScore');
+  const scamType = document.getElementById('trialType');
+  const details = document.getElementById('trialDetails');
+
+  box.style.display = 'block';
+
+  if (type === 'A') {
+    box.style.background = '#FEF2F2';
+    box.style.borderColor = '#FECACA';
+    badge.innerText = 'HIGH RISK (SIMULATION)';
+    badge.style.background = '#FEE2E2';
+    badge.style.color = '#DC2626';
+    score.innerText = 'Calculated Risk: 85 / 100';
+    score.style.color = '#DC2626';
+    scamType.innerText = 'Detected Pattern: Upfront Fee & Security Deposit Trap';
+    details.innerHTML = '<strong>Flagged Signatures:</strong> Detected arbitrary monetary demand (₹1,500) paired with upfront security deposit clauses. Real employers never charge candidates.';
+  } else if (type === 'B') {
+    box.style.background = '#FEF2F2';
+    box.style.borderColor = '#FECACA';
+    badge.innerText = 'HIGH RISK (SIMULATION)';
+    badge.style.background = '#FEE2E2';
+    badge.style.color = '#DC2626';
+    score.innerText = 'Calculated Risk: 80 / 100';
+    score.style.color = '#DC2626';
+    scamType.innerText = 'Detected Pattern: Task & Review Scam with Telegram Redirection';
+    details.innerHTML = '<strong>Flagged Signatures:</strong> Promised high daily earnings for trivial YouTube video likes, redirecting communication to unmonitored Telegram handles.';
+  } else if (type === 'C') {
+    box.style.background = '#ECFDF5';
+    box.style.borderColor = '#A7F3D0';
+    badge.innerText = 'LOW RISK / CLEAN (SIMULATION)';
+    badge.style.background = '#D1FAE5';
+    badge.style.color = '#059669';
+    score.innerText = 'Calculated Risk: 15 / 100';
+    score.style.color = '#059669';
+    scamType.innerText = 'Detected Pattern: Authentic Academic Communication';
+    details.innerHTML = '<strong>Assessment:</strong> Formal communication directing candidates to official internal channels with zero monetary demands or urgency traps.';
+  }
+}
+</script>
+{% endblock %}

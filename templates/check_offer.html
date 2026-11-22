@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}Verify Offer Letter — ScamGuard{% endblock %}
+
+{% block content %}
+<section class="section" style="padding-top: 120px; background-color: var(--bg-light);">
+  <div class="container" style="max-width: 800px;">
+    <div class="section-header">
+      <span class="section-label">Offer Letter Authenticity Check</span>
+      <h1 class="heading-3">Verify an appointment or offer letter</h1>
+      <p class="body-3" style="color: var(--text-light-secondary);">
+        Checks sender domains, fee demands, ambiguous stipends, and missing joining dates.
+      </p>
+    </div>
+
+    <div class="form-panel" style="max-width: 100%;">
+      <form action="{{ url_for('check_offer') }}" method="POST">
+        <div class="form-group">
+          <label class="form-label" for="sender_email">Recruiter Sender Email:</label>
+          <input type="email" id="sender_email" name="sender_email" class="form-input" placeholder="e.g. hr-tcs-careers@gmail.com" required value="{{ sender_email or '' }}">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="company_website">Official Company Website:</label>
+          <input type="text" id="company_website" name="company_website" class="form-input" placeholder="e.g. tcs.com" value="{{ company_website or '' }}">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="offer_text">Paste Offer Letter Text:</label>
+          <textarea id="offer_text" name="offer_text" rows="6" class="form-textarea" placeholder="Paste the key terms, joining details, or compensation description..." required>{{ offer_text or '' }}</textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary button-md" style="width: 100%;">
+          Scan Offer Letter &rarr;
+        </button>
+      </form>
+    </div>
+
+    {% if result %}
+    <div class="form-panel" style="max-width: 100%; margin-top: 24px; border-left: 6px solid {% if result.score >= 60 %}var(--color-danger){% elif result.score >= 30 %}var(--color-medium){% else %}var(--color-safe){% endif %};">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+        <div>
+          <span class="section-label">Offer Letter Assessment</span>
+          <h2 class="heading-4" style="margin-top: 4px;">Risk Score: {{ result.score }} / 100</h2>
+          <p class="body-2">Identified Type: <strong>{{ result.scam_type|capitalize }}</strong></p>
+        </div>
+        <div>
+          {% if result.score >= 60 %}
+          <span class="meter-badge badge-danger">High Danger</span>
+          {% elif result.score >= 30 %}
+          <span class="meter-badge badge-medium">Caution Advised</span>
+          {% else %}
+          <span class="meter-badge badge-safe">Appears Normal</span>
+          {% endif %}
+        </div>
+      </div>
+
+      <div style="margin-top: 20px;">
+        <h4 class="title-3">Key Red Flags Detected:</h4>
+        <ul style="margin-top: 8px; padding-left: 20px; color: var(--text-light-secondary);">
+          {% for r in result.reasons %}
+          <li style="margin-bottom: 6px;">
+            <strong>{{ r.phrase }}</strong>: {{ r.explanation }}
+          </li>
+          {% else %}
+          <li>No free email providers or fee deposit clauses found in text.</li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      {% if result.questions %}
+      <div style="margin-top: 20px; padding: 16px; background-color: var(--bg-light); border-radius: 8px;">
+        <h4 class="title-3">Verification steps for this employer:</h4>
+        <ul style="margin-top: 8px; padding-left: 20px;">
+          {% for q in result.questions %}
+          <li style="margin-bottom: 6px;">{{ q }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}
